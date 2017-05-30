@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
 
@@ -12,11 +13,13 @@ public class ProductServiceImpl implements ProductService {
     private DataSource dataSource;
 
     public ProductServiceImpl() {
+    	/* Uncomment if reading from a real database
         try {
             dataSource = getDataSource();
         } catch (DAOException dx) {
             dx.printStackTrace();
         }
+        */
     }
  
     /* (non-Javadoc)
@@ -26,7 +29,8 @@ public class ProductServiceImpl implements ProductService {
 	public Product findByCode(String code) {
 
     	ProductDAOImpl amaysimProductDAO = null;
-
+    	
+    	/* Uncomment if reading from a real database
         try {
         	amaysimProductDAO = getProductDAO();
         } catch (DAOException dx) {
@@ -34,7 +38,11 @@ public class ProductServiceImpl implements ProductService {
         } finally {
             close(amaysimProductDAO);
         }
-		
+        */
+     
+        
+    	amaysimProductDAO = new ProductDAOImpl();
+
         return amaysimProductDAO.findByCode(code);
     }
 
@@ -47,6 +55,7 @@ public class ProductServiceImpl implements ProductService {
 
     	ProductDAOImpl amaysimProductDAO = null;
 
+    	/* Uncomment if reading from a real database
         try {
         	amaysimProductDAO = getProductDAO();
         } catch (DAOException dx) {
@@ -54,8 +63,11 @@ public class ProductServiceImpl implements ProductService {
         } finally {
             close(amaysimProductDAO);
         }
-		
+        */
+    	amaysimProductDAO = new ProductDAOImpl();
+
         return amaysimProductDAO.findAll();
+
     }
 
     
@@ -104,7 +116,7 @@ public class ProductServiceImpl implements ProductService {
         DataSource ds = null;
         try {
             // TODO get this name from global context
-            ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/webstore");
+            ds = (DataSource) ctx.lookup("java:/comp/env/jdbc");
         } catch (NamingException nx) {
             throw new DAOException("Failed to retrieve datasource");
         }
