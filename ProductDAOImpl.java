@@ -6,6 +6,11 @@ import java.util.List;
 public class ProductDAOImpl implements ProductDAO {
 	Connection conn = null;
 
+
+	public ProductDAOImpl() {
+		
+	}
+
 	public ProductDAOImpl(Connection conn) {
 		this.conn = conn;
 	}
@@ -34,7 +39,18 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	public Product findByCode(String code) {
 		// TODO Auto-generated method stub
-		return new Product();
+		Product prod = null;
+		
+		//Using dummy records for testing		
+        switch(code){  
+        case GlobalConstants.ULT_SMALL: prod =  new Product("ult_medium","Unlimited 2GB",new BigDecimal(29.90)); break;  
+        case GlobalConstants.ULT_MEDIUM:  prod = new Product("ult_medium","Unlimited 2GB",new BigDecimal(29.90));break;  
+        case GlobalConstants.ULT_LARGE:  prod = new Product("ult_large","Unlimited 5GB",new BigDecimal(44.90));break;  
+        case GlobalConstants.ONE_GB:   prod = new Product("1gb","1 GB Data-pack",new BigDecimal(9.90)); break;  
+        default:System.out.println("Product not found");  
+        }
+		
+		return prod;
 	}
 
 	@Override
