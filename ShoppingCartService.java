@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,15 +81,18 @@ public class ShoppingCartService {
 	public void displayCart() {
 		Product prod=null;		
 		List<Item> cartList = cart.getItems();  ;
-		System.out.println("\n\n\n\n\nCustomer XYZ Checkout: \n" );		
+		System.out.println("\n\n\n\n\nCustomer XYZ Checkout: \n" );	
+		//BigDecimal dispAmount = new BigDecimal(0);
+		//dispAmount.setScale(2, BigDecimal.ROUND_DOWN);
+		DecimalFormat df = new DecimalFormat("#,###.00");
 		
 		for (Item itm : cartList) {
 		    prod = prodSvc.findByCode(itm.getProductCode());
-	
-			System.out.println("\nId:" + itm.getId() + "  Product: " + prod.getName()  + "  Qty: " + itm.getQty() + "  Price: " + prod.getPrice() );
+		    
+			System.out.println("\nId:" + itm.getId() + "  Product: " + prod.getName()  + "  Qty: " + itm.getQty() + "  Price: " + df.format(prod.getPrice()) );
 		}
 		System.out.println("============================================================================" );		
-		System.out.println("\nTotal Cost:" + cart.getTotalCost() + "\n\n\n");
+		System.out.println("\nTotal Cost: " + df.format(cart.getTotalCost()) + "\n\n\n");
 	
 	}
 
