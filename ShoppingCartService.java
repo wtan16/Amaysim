@@ -92,10 +92,10 @@ public class ShoppingCartService {
 
 
 	
-	public void main(String[] arg) {
+	public static void main(String[] arg) {
 		//Create dummy items for testing
 		Item item = null;;
-		itemList = new ArrayList<Item>();
+		List<Item> itemList itemList = new ArrayList<Item>();
    	
 		item =  new Item(1,"ult_small","");		
 		itemList.add(item);		
