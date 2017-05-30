@@ -80,10 +80,12 @@ public class ShoppingCartService {
 	public void displayCart() {
 		Product prod=null;		
 		List<Item> cartList = cart.getItems();  ;
+		System.out.println("\n\n\n\n\nCustomer XYZ Checkout: \n" );		
 		
 		for (Item itm : cartList) {
 		    prod = prodSvc.findByCode(itm.getProductCode());
-			System.out.println("\nId:" + itm.getId() + "Product: " + prod.getName()  + "Qty: " + itm.getQty() + "Price: " + prod.getPrice() );
+	
+			System.out.println("\nId:" + itm.getId() + "  Product: " + prod.getName()  + "  Qty: " + itm.getQty() + "  Price: " + prod.getPrice() );
 		}
 		System.out.println("============================================================================" );		
 		System.out.println("\nTotal Cost:" + cart.getTotalCost() + "\n\n\n");
@@ -95,8 +97,8 @@ public class ShoppingCartService {
 	public static void main(String[] arg) {
 		//Create dummy items for testing
 		Item item = null;;
-		List<Item> itemList itemList = new ArrayList<Item>();
-   	
+		List<Item> itemList  = new ArrayList<Item>();
+		
 		item =  new Item(1,"ult_small","");		
 		itemList.add(item);		
 		item =  new Item(2,"ult_medium","");		
