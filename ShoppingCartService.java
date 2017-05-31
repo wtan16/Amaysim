@@ -18,11 +18,12 @@ public class ShoppingCartService {
 	
 	
 	public void processOrder() {
-		BigDecimal totCost=new BigDecimal(0),totDiscount=new BigDecimal(0);
+		BigDecimal totCost  =new BigDecimal(0),totDiscount=new BigDecimal(0);
 		Product prod=null;
 		Boolean isPromo = false;
 		Promos promo = null;
-	  
+		BigDecimal prodPrice = new BigDecimal(0);
+		
 		for(Item item: itemList){
 		    prod = prodSvc.findByCode(item.getProductCode());
 			  	 
@@ -43,6 +44,7 @@ public class ShoppingCartService {
 	        }
 	        
 	        cart.add(item);
+	        
 	        totCost =  totCost.add(prod.getPrice());
 	    }
 		  
@@ -57,11 +59,10 @@ public class ShoppingCartService {
 	      
 	    if (ultMedium > 0) {      	
 	    	for (int i=0; i <= ultMedium; i++) {
-	    	    cart.add( new Item(1,GlobalConstants.ONE_GB,"") );
+	    	    cart.add( new Item(GlobalConstants.ONE_GB,1,new BigDecimal(0),"") );
 	    	}
 	    }
-	    	
-      	
+	    	   
 	    if (ultLarge > 3)  {      	
 	    	prod = prodSvc.findByCode(GlobalConstants.ULT_LARGE);
 			promo =  new BulkDiscountPromo();
@@ -82,17 +83,16 @@ public class ShoppingCartService {
 		Product prod=null;		
 		List<Item> cartList = cart.getItems();  ;
 		System.out.println("\n\n\n\n\nCustomer XYZ Checkout: \n" );	
-		//BigDecimal dispAmount = new BigDecimal(0);
-		//dispAmount.setScale(2, BigDecimal.ROUND_DOWN);
-		DecimalFormat df = new DecimalFormat("#,###.00");
-		
+		DecimalFormat df = new DecimalFormat("#,#00.00");
+		System.out.println("\nId       " + "Product          "   + "Qty     "  + "Price    \n"  );
+
 		for (Item itm : cartList) {
 		    prod = prodSvc.findByCode(itm.getProductCode());
 		    
-			System.out.println("\nId:" + itm.getId() + "  Product: " + prod.getName()  + "  Qty: " + itm.getQty() + "  Price: " + df.format(prod.getPrice()) );
+			System.out.println( itm.getId() + "      " + prod.getName()  + "       " + itm.getQty() + "      " + df.format(itm.getPrice()) );
 		}
-		System.out.println("============================================================================" );		
-		System.out.println("\nTotal Cost: " + df.format(cart.getTotalCost()) + "\n\n\n");
+		System.out.println("====================================================" );		
+		System.out.println("\n                       Total:   " + df.format(cart.getTotalCost()) + "\n\n\n");
 	
 	}
 
@@ -103,13 +103,13 @@ public class ShoppingCartService {
 		Item item = null;;
 		List<Item> itemList  = new ArrayList<Item>();
 		
-		item =  new Item(1,"ult_small","");		
+		item =  new Item(GlobalConstants.ULT_SMALL,1,new BigDecimal(24.90),"");		
 		itemList.add(item);		
-		item =  new Item(2,"ult_medium","");		
+		item =  new Item(GlobalConstants.ULT_MEDIUM,2,new BigDecimal(29.90),"");			
 		itemList.add(item);	
-		item =  new Item(3,"ult_large","");		
+      		item =  new Item(GlobalConstants.ULT_LARGE,3,new BigDecimal(44.90),"");				
 		itemList.add(item);
-		item =  new Item(3,"1gb","I<3AMAYSIM");		
+		item =  new Item(GlobalConstants.ONE_GB,1,new BigDecimal(9.90),"");					
 		itemList.add(item);
 		
 		ShoppingCartService cartService = new ShoppingCartService(itemList);
